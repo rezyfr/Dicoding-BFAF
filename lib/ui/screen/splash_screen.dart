@@ -8,7 +8,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(
       const Duration(seconds: 3),
-      () => Navigator.pushNamed(
+      () => Navigator.pushReplacementNamed(
         context,
         HomeScreen.routeName,
       ),
