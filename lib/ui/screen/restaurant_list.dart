@@ -2,6 +2,7 @@ import 'package:dicoding_flutter_fundamental/model/restaurant.dart';
 import 'package:dicoding_flutter_fundamental/model/restaurants.dart';
 import 'package:dicoding_flutter_fundamental/ui/screen/detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import '../../styles.dart';
 
@@ -20,7 +21,8 @@ class RestaurantList extends StatelessWidget {
     return FutureBuilder(
       future: _loadRestaurants(context),
       builder: (context, snapshot) {
-        final List<Restaurants> restaurants = snapshot.data as List<Restaurants>;
+        final List<Restaurants> restaurants =
+            snapshot.data as List<Restaurants>;
         return _buildRestaurantItem(context, restaurants);
       },
     );
@@ -48,8 +50,9 @@ class RestaurantList extends StatelessWidget {
                       tag: restaurant.pictureId,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          restaurant.pictureId,
+                        child: FadeInImage.memoryNetwork(
+                          placeholder: kTransparentImage,
+                          image: restaurant.pictureId,
                           height: 100,
                           width: 130,
                           fit: BoxFit.cover,
