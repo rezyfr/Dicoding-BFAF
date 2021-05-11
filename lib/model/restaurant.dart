@@ -5,12 +5,11 @@ import 'package:dicoding_flutter_fundamental/model/restaurants.dart';
 class Restaurant {
   List<Restaurants> restaurants;
 
-  Restaurant({this.restaurants});
+  Restaurant({required this.restaurants});
 
   factory Restaurant.fromJson(Map<String, dynamic> json) {
-    var restoList = [];
+    List<Restaurants> restoList = [];
     if (json['restaurants'] != null) {
-      restoList = new List<Restaurants>();
       json['restaurants'].forEach((v) {
         restoList.add(new Restaurants.fromJson(v));
       });

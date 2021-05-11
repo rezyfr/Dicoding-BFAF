@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:dicoding_flutter_fundamental/model/menu.dart';
-import 'package:flutter/cupertino.dart';
 
 class Restaurants {
   String id;
@@ -10,16 +7,16 @@ class Restaurants {
   String pictureId;
   String city;
   num rating;
-  Menus menus;
+  Menus? menus;
 
   Restaurants(
-      {this.id,
-      this.name,
-      this.description,
-      this.pictureId,
-      this.city,
-      this.rating,
-      this.menus});
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.pictureId,
+      required this.city,
+      required this.rating,
+        this.menus});
 
   factory Restaurants.fromJson(Map<String, dynamic> json) {
     return Restaurants(

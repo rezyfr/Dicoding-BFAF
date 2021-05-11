@@ -5,19 +5,17 @@ class Menus {
   List<Foods> foods;
   List<Drinks> drinks;
 
-  Menus({this.foods, this.drinks});
+  Menus({required this.foods, required this.drinks});
 
   factory Menus.fromJson(Map<String, dynamic> json) {
-    var foodList = [];
-    var drinkList = [];
+    List<Foods> foodList = [];
+    List<Drinks> drinkList = [];
     if (json['foods'] != null) {
-      foodList = new List<Foods>();
       json['foods'].forEach((v) {
         foodList.add(new Foods.fromJson(v));
       });
     }
     if (json['drinks'] != null) {
-      drinkList = new List<Drinks>();
       json['drinks'].forEach((v) {
         drinkList.add(new Drinks.fromJson(v));
       });

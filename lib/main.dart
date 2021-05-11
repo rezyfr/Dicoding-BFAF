@@ -1,7 +1,10 @@
 import 'package:dicoding_flutter_fundamental/styles.dart';
-import 'package:dicoding_flutter_fundamental/ui/home_screen.dart';
-import 'package:dicoding_flutter_fundamental/ui/splash_screen.dart';
+import 'package:dicoding_flutter_fundamental/ui/screen/detail_screen.dart';
+import 'package:dicoding_flutter_fundamental/ui/screen/home_screen.dart';
+import 'package:dicoding_flutter_fundamental/ui/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'model/restaurants.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,6 +23,7 @@ class MyApp extends StatelessWidget {
       routes: {
         SplashScreen.routeName: (context) => SplashScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
+        DetailScreen.routeName: (context) => DetailScreen(restaurant: ModalRoute.of(context)!.settings.arguments as Restaurants),
       },
     );
   }

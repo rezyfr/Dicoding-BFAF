@@ -1,4 +1,4 @@
-import 'package:dicoding_flutter_fundamental/ui/home_screen.dart';
+import 'package:dicoding_flutter_fundamental/ui/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {

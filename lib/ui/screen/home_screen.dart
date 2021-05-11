@@ -1,4 +1,4 @@
-import 'package:dicoding_flutter_fundamental/ui/restaurant_list.dart';
+import 'package:dicoding_flutter_fundamental/ui/screen/restaurant_list.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
                 'Restaurant',
                 style: Theme.of(context)
                     .textTheme
-                    .headline4
+                    .headline4!
                     .apply(color: Colors.black),
                 textAlign: TextAlign.start,
               ),
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                 'Recommendation restaurant for you!',
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText1
+                    .bodyText1!
                     .apply(color: Colors.black38),
               ),
               RestaurantList()
