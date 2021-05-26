@@ -23,7 +23,11 @@ class RestaurantList extends StatelessWidget {
       builder: (context, snapshot) {
         final List<Restaurants> restaurants =
             snapshot.data as List<Restaurants>;
-        return _buildRestaurantItem(context, restaurants);
+        if (restaurants.isEmpty) {
+          return _buildEmptyItem(context);
+        } else {
+          return _buildRestaurantItem(context, restaurants);
+        }
       },
     );
   }
@@ -127,6 +131,23 @@ class RestaurantList extends StatelessWidget {
             );
           },
           itemCount: restaurants.length,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmptyItem(BuildContext context) {
+    return Expanded(
+      child: Align(
+        alignment: Alignment.center,
+        child: Center(
+          child: Text(
+            "Error retrieving data :(",
+            style: Theme.of(context)
+                .textTheme
+                .headline6!
+                .apply(color: Colors.black54),
+          ),
         ),
       ),
     );
