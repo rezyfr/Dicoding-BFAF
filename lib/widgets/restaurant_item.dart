@@ -1,50 +1,29 @@
-import 'package:dicoding_flutter_fundamental/model/restaurant.dart';
-import 'package:dicoding_flutter_fundamental/model/restaurants.dart';
+import 'package:dicoding_flutter_fundamental/common/navigation.dart';
+import 'package:dicoding_flutter_fundamental/common/styles.dart';
+import 'package:dicoding_flutter_fundamental/data/model/restaurant_list.dart';
 import 'package:dicoding_flutter_fundamental/ui/screen/detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import '../../styles.dart';
+class RestaurantItem extends StatelessWidget {
+  final List<RestaurantList> restaurantList;
 
-class RestaurantList extends StatelessWidget {
-  Widget _buildList(BuildContext context) {
-    Future<String> _loadAsset(BuildContext context) async {
-      return await DefaultAssetBundle.of(context)
-          .loadString('assets/local_restaurant.json');
-    }
+  RestaurantItem({
+    required this.restaurantList,
+  });
 
-    Future<List<Restaurants>> _loadRestaurants(BuildContext context) async {
-      String jsonString = await _loadAsset(context);
-      return parseLocal(jsonString).restaurants;
-    }
-
-    return FutureBuilder(
-      future: _loadRestaurants(context),
-      builder: (context, snapshot) {
-        final List<Restaurants> restaurants =
-            snapshot.data as List<Restaurants>;
-        if (restaurants.isEmpty) {
-          return _buildEmptyItem(context);
-        } else {
-          return _buildRestaurantItem(context, restaurants);
-        }
-      },
-    );
-  }
-
-  Widget _buildRestaurantItem(
-      BuildContext context, List<Restaurants> restaurants) {
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.only(top: 48.0),
+        padding: const EdgeInsets.only(top: 24.0),
         child: ListView.builder(
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            final restaurant = restaurants[index];
+            final restaurant = restaurantList[index];
             return InkWell(
               onTap: () {
-                Navigator.pushNamed(context, DetailScreen.routeName,
-                    arguments: restaurant);
+                Navigation.intentWithData(DetailScreen.routeName, restaurant.id);
               },
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
@@ -56,7 +35,7 @@ class RestaurantList extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8.0),
                         child: FadeInImage.memoryNetwork(
                           placeholder: kTransparentImage,
-                          image: restaurant.pictureId,
+                          image: "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}",
                           height: 100,
                           width: 130,
                           fit: BoxFit.cover,
@@ -130,31 +109,9 @@ class RestaurantList extends StatelessWidget {
               ),
             );
           },
-          itemCount: restaurants.length,
+          itemCount: restaurantList.length,
         ),
       ),
     );
-  }
-
-  Widget _buildEmptyItem(BuildContext context) {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.center,
-        child: Center(
-          child: Text(
-            "Error retrieving data :(",
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .apply(color: Colors.black54),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _buildList(context);
   }
 }

@@ -1,6 +1,5 @@
-import 'package:dicoding_flutter_fundamental/model/food.dart';
-
 import 'drink.dart';
+import 'food.dart';
 
 class Menus {
   List<Foods> foods;
