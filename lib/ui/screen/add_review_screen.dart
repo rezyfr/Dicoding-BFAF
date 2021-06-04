@@ -116,9 +116,9 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                 if (state.state == ResultState.Loading) {
                   return LoadingIndicator();
                 } else if (state.state == ResultState.HasData) {
-                  ScaffoldMessenger.of(context)
-                    ..removeCurrentSnackBar()
-                    ..showSnackBar(SnackBar(content: Text('Success')));
+                  // ScaffoldMessenger.of(context)
+                  //   ..removeCurrentSnackBar()
+                  //   ..showSnackBar(SnackBar(content: Text('Success')));
                   Navigation.backWithResult("Success");
                   return Text('');
                 } else {

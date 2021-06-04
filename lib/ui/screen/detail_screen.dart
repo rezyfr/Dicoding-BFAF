@@ -1,3 +1,4 @@
+import 'package:dicoding_flutter_fundamental/api/api_service.dart';
 import 'package:dicoding_flutter_fundamental/common/navigation.dart';
 import 'package:dicoding_flutter_fundamental/common/styles.dart';
 import 'package:dicoding_flutter_fundamental/data/model/category.dart';
@@ -6,6 +7,7 @@ import 'package:dicoding_flutter_fundamental/data/model/drink.dart';
 import 'package:dicoding_flutter_fundamental/data/model/food.dart';
 import 'package:dicoding_flutter_fundamental/data/model/restaurant_detail.dart';
 import 'package:dicoding_flutter_fundamental/provider/restaurant_detail_provider.dart';
+import 'package:dicoding_flutter_fundamental/provider/restaurant_review_provider.dart';
 import 'package:dicoding_flutter_fundamental/ui/screen/add_review_screen.dart';
 import 'package:dicoding_flutter_fundamental/utils/ResultState.dart';
 import 'package:dicoding_flutter_fundamental/widgets/loading_indicator.dart';
@@ -91,9 +93,8 @@ class DetailScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   TextButton(
-                    onPressed: () => {
-                      _navigateWithResult(context, restaurant.id)
-                    },
+                    onPressed: () =>
+                        {_navigateWithResult(context, restaurant.id)},
                     child: Text('Add review'),
                   )
                 ],
@@ -295,13 +296,14 @@ class DetailScreen extends StatelessWidget {
   }
 
   void _navigateWithResult(context, restaurantId) async {
-    final result = await Navigation.intentWithData(
-        AddReviewScreen.routeName, restaurantId);
-    // if (result == "Success") {
-    //   ScaffoldMessenger.of(context)
-    //     ..removeCurrentSnackBar()
-    //     ..showSnackBar(SnackBar(content: Text('$result')));
-    // }
+    final result = await Navigator.pushNamed(
+      context,
+      AddReviewScreen.routeName,
+      arguments: restaurantId,
+    );
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text('$result')));
   }
 
   Widget _buildCategoryPills(BuildContext context, List<Category> categories) {
@@ -357,7 +359,7 @@ class DetailScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            review.name,
+                            review.name ?? "",
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2!
@@ -371,7 +373,7 @@ class DetailScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(
                           bottom: 12.0,
                         ),
-                        child: Text(review.review,
+                        child: Text(review.review ?? "",
                             style: Theme.of(context).textTheme.caption),
                       ),
                     ],
