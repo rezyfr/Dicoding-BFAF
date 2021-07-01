@@ -1,5 +1,3 @@
-import 'package:dicoding_flutter_fundamental/api/api_service.dart';
-import 'package:dicoding_flutter_fundamental/common/navigation.dart';
 import 'package:dicoding_flutter_fundamental/common/styles.dart';
 import 'package:dicoding_flutter_fundamental/data/model/category.dart';
 import 'package:dicoding_flutter_fundamental/data/model/customer_review.dart';
@@ -8,7 +6,6 @@ import 'package:dicoding_flutter_fundamental/data/model/food.dart';
 import 'package:dicoding_flutter_fundamental/data/model/restaurant_detail.dart';
 import 'package:dicoding_flutter_fundamental/provider/database_provider.dart';
 import 'package:dicoding_flutter_fundamental/provider/restaurant_detail_provider.dart';
-import 'package:dicoding_flutter_fundamental/provider/restaurant_review_provider.dart';
 import 'package:dicoding_flutter_fundamental/ui/screen/add_review_screen.dart';
 import 'package:dicoding_flutter_fundamental/utils/result_state.dart';
 import 'package:dicoding_flutter_fundamental/widgets/loading_indicator.dart';

@@ -1,7 +1,5 @@
-import 'package:dicoding_flutter_fundamental/data/model/restaurant_list.dart';
 import 'package:dicoding_flutter_fundamental/provider/database_provider.dart';
 import 'package:dicoding_flutter_fundamental/utils/result_state.dart';
-import 'package:dicoding_flutter_fundamental/widgets/platform_widget.dart';
 import 'package:dicoding_flutter_fundamental/widgets/restaurant_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

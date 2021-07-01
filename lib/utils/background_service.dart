@@ -1,6 +1,5 @@
 
 import 'dart:isolate';
-
 import 'dart:ui';
 
 import 'package:dicoding_flutter_fundamental/api/api_service.dart';
