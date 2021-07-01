@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'drink.dart';
 import 'food.dart';
 
@@ -25,4 +27,9 @@ class Menus {
       drinks: drinkList
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    "foods": foods,
+    "drinks": drinks
+  };
 }

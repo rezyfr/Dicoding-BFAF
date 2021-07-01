@@ -1,7 +1,7 @@
 import 'package:dicoding_flutter_fundamental/api/api_service.dart';
 import 'package:dicoding_flutter_fundamental/data/model/restaurant_list_result.dart';
 import 'package:dicoding_flutter_fundamental/data/model/restaurant_search_result.dart';
-import 'package:dicoding_flutter_fundamental/utils/ResultState.dart';
+import 'package:dicoding_flutter_fundamental/utils/result_state.dart';
 import 'package:flutter/cupertino.dart';
 
 class RestaurantSearchProvider extends ChangeNotifier {

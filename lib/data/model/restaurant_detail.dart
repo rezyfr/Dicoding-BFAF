@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'category.dart';
 import 'customer_review.dart';
 import 'menu.dart';
@@ -46,4 +48,37 @@ class RestaurantDetail {
                   review.review.toString() != "Test"),
         ),
       );
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name,
+      "description": description,
+      "city": city,
+      "address": address,
+      "pictureId": pictureId,
+      "categories": categories,
+      "menus": menus.toJson(),
+      "rating": rating,
+      "customerReviews": customerReviews,
+    };
+  }
+
+  Map<String, dynamic> toDbJson(){
+    var restaurantJson = {
+      "name": name,
+      "description": description,
+      "city": city,
+      "address": address,
+      "pictureId": pictureId,
+      "categories": categories,
+      "menus": menus.toJson(),
+      "rating": rating,
+      "customerReviews": customerReviews
+    };
+    return {
+      "id": id,
+      "data": json.encode(restaurantJson)
+    };
+  }
 }

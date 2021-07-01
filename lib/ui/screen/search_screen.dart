@@ -1,5 +1,5 @@
 import 'package:dicoding_flutter_fundamental/provider/restaurant_search_provider.dart';
-import 'package:dicoding_flutter_fundamental/utils/ResultState.dart';
+import 'package:dicoding_flutter_fundamental/utils/result_state.dart';
 import 'package:dicoding_flutter_fundamental/widgets/empty_search.dart';
 import 'package:dicoding_flutter_fundamental/widgets/loading_indicator.dart';
 import 'package:dicoding_flutter_fundamental/widgets/restaurant_item.dart';

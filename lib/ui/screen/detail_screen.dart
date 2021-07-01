@@ -6,10 +6,11 @@ import 'package:dicoding_flutter_fundamental/data/model/customer_review.dart';
 import 'package:dicoding_flutter_fundamental/data/model/drink.dart';
 import 'package:dicoding_flutter_fundamental/data/model/food.dart';
 import 'package:dicoding_flutter_fundamental/data/model/restaurant_detail.dart';
+import 'package:dicoding_flutter_fundamental/provider/database_provider.dart';
 import 'package:dicoding_flutter_fundamental/provider/restaurant_detail_provider.dart';
 import 'package:dicoding_flutter_fundamental/provider/restaurant_review_provider.dart';
 import 'package:dicoding_flutter_fundamental/ui/screen/add_review_screen.dart';
-import 'package:dicoding_flutter_fundamental/utils/ResultState.dart';
+import 'package:dicoding_flutter_fundamental/utils/result_state.dart';
 import 'package:dicoding_flutter_fundamental/widgets/loading_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,249 +51,295 @@ class DetailScreen extends StatelessWidget {
   }
 
   Widget _buildDetailScreen(BuildContext context, RestaurantDetail restaurant) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(
-          children: [
-            Hero(
-              tag: restaurant.pictureId,
-              child: Image.network(
-                  "https://restaurant-api.dicoding.dev/images/large/${restaurant.pictureId}"),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Colors.black12,
-                ),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            )
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-          child: Column(
+    return Consumer<DatabaseProvider>(builder: (context, provider, child) {
+      return FutureBuilder<bool>(
+        future: provider.isFavorited(restaurant.id),
+        builder: (context, snapshot) {
+          var isFavorited = snapshot.data ?? false;
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Stack(
                 children: [
-                  Text(
-                    restaurant.name,
-                    style: Theme.of(context).textTheme.headline6,
+                  Hero(
+                    tag: restaurant.pictureId,
+                    child: Image.network(
+                        "https://restaurant-api.dicoding.dev/images/large/${restaurant.pictureId}"),
                   ),
-                  TextButton(
-                    onPressed: () =>
-                        {_navigateWithResult(context, restaurant.id)},
-                    child: Text('Add review'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Colors.black12,
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Colors.black12,
+                          ),
+                          child: isFavorited ? IconButton(
+                            icon: Icon(
+                              Icons.favorite,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              isFavorited = !isFavorited;
+                              provider.removeFavorite(restaurant.id);
+                            },
+                          ) :  IconButton(
+                            icon: Icon(
+                              Icons.favorite_border,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              isFavorited = !isFavorited;
+                              provider.addFavorite(restaurant);
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: _buildCategoryPills(context, restaurant.categories),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.location_on_sharp,
-                      size: 12,
-                      color: Colors.grey,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 4.0),
-                      child: Text(
-                        restaurant.city,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .apply(color: Colors.grey),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 24),
-                child: Text(
-                  "Description",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Text(
-                  restaurant.description,
-                  style: Theme.of(context).textTheme.caption,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 24),
-                child: Text(
-                  "Menu",
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      flex: 10,
-                      child: InkWell(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return MenuList.food(
-                                foods: restaurant.menus.foods,
-                              );
-                            },
-                          );
-                        },
-                        child: Stack(
-                          alignment: Alignment.bottomLeft,
-                          children: [
-                            Container(
-                              height: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage('images/food.jpeg'),
-                                  colorFilter: ColorFilter.mode(
-                                    Colors.black.withOpacity(0.5),
-                                    BlendMode.srcOver,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4.0),
-                                    child: Text(
-                                      "Food",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle2!
-                                          .apply(color: Colors.white),
-                                    ),
-                                  ),
-                                  Text(
-                                    // "${restaurant.menus?.foods.length} menus",
-                                    "menus",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .overline!
-                                        .apply(color: Colors.white),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Spacer(
-                      flex: 1,
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: InkWell(
-                        onTap: () {
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return MenuList.drink(
-                                    drinks: restaurant.menus.drinks);
-                              });
-                        },
-                        child: Stack(
-                          alignment: Alignment.bottomLeft,
-                          children: [
-                            Container(
-                              height: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage('images/drink.jpg'),
-                                  colorFilter: ColorFilter.mode(
-                                    Colors.black.withOpacity(0.4),
-                                    BlendMode.srcOver,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4.0),
-                                    child: Text(
-                                      "Drink",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle2!
-                                          .apply(color: Colors.white),
-                                    ),
-                                  ),
-                                  Text(
-                                    // "${restaurant.menus?.drinks.length} menus",
-                                    "menus",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .overline!
-                                        .apply(color: Colors.white),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 24),
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Restaurant Review",
-                      style: Theme.of(context).textTheme.bodyText1,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          restaurant.name,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        TextButton(
+                          onPressed: () =>
+                              {_navigateWithResult(context, restaurant.id)},
+                          child: Text('Add review'),
+                        )
+                      ],
                     ),
-                    _buildReviewList(context, restaurant.customerReviews)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child:
+                          _buildCategoryPills(context, restaurant.categories),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.location_on_sharp,
+                            size: 12,
+                            color: Colors.grey,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0),
+                            child: Text(
+                              restaurant.city,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .apply(color: Colors.grey),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: Text(
+                        "Description",
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(
+                        restaurant.description,
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: Text(
+                        "Menu",
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            flex: 10,
+                            child: InkWell(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return MenuList.food(
+                                      foods: restaurant.menus.foods,
+                                    );
+                                  },
+                                );
+                              },
+                              child: Stack(
+                                alignment: Alignment.bottomLeft,
+                                children: [
+                                  Container(
+                                    height: 150,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage('images/food.jpeg'),
+                                        colorFilter: ColorFilter.mode(
+                                          Colors.black.withOpacity(0.5),
+                                          BlendMode.srcOver,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 4.0),
+                                          child: Text(
+                                            "Food",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle2!
+                                                .apply(color: Colors.white),
+                                          ),
+                                        ),
+                                        Text(
+                                          // "${restaurant.menus?.foods.length} menus",
+                                          "menus",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .overline!
+                                              .apply(color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Spacer(
+                            flex: 1,
+                          ),
+                          Expanded(
+                            flex: 10,
+                            child: InkWell(
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return MenuList.drink(
+                                          drinks: restaurant.menus.drinks);
+                                    });
+                              },
+                              child: Stack(
+                                alignment: Alignment.bottomLeft,
+                                children: [
+                                  Container(
+                                    height: 150,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage('images/drink.jpg'),
+                                        colorFilter: ColorFilter.mode(
+                                          Colors.black.withOpacity(0.4),
+                                          BlendMode.srcOver,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 4.0),
+                                          child: Text(
+                                            "Drink",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle2!
+                                                .apply(color: Colors.white),
+                                          ),
+                                        ),
+                                        Text(
+                                          // "${restaurant.menus?.drinks.length} menus",
+                                          "menus",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .overline!
+                                              .apply(color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Restaurant Review",
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                          _buildReviewList(context, restaurant.customerReviews)
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
             ],
-          ),
-        ),
-      ],
-    );
+          );
+        },
+      );
+    });
   }
 
   void _navigateWithResult(context, restaurantId) async {

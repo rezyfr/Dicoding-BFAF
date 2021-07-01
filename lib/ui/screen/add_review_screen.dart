@@ -1,6 +1,6 @@
 import 'package:dicoding_flutter_fundamental/common/navigation.dart';
 import 'package:dicoding_flutter_fundamental/provider/restaurant_review_provider.dart';
-import 'package:dicoding_flutter_fundamental/utils/ResultState.dart';
+import 'package:dicoding_flutter_fundamental/utils/result_state.dart';
 import 'package:dicoding_flutter_fundamental/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
