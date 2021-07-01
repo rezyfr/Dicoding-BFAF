@@ -11,9 +11,10 @@ class RestaurantDetailResult {
   String message;
   RestaurantDetail restaurant;
 
-  factory RestaurantDetailResult.fromJson(Map<String, dynamic> json) => RestaurantDetailResult(
-    error: json["error"],
-    message: json["message"],
-    restaurant: RestaurantDetail.fromJson(json["restaurant"]),
-  );
+  factory RestaurantDetailResult.fromJson(Map<String, dynamic> json) =>
+      RestaurantDetailResult(
+        error: json["error"],
+        message: json["message"],
+        restaurant: RestaurantDetail.fromJson(json["restaurant"]),
+      );
 }

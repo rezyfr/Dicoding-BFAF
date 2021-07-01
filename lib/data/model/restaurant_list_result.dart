@@ -25,10 +25,10 @@ class RestaurantListResult {
   }
 
   Map<String, dynamic> toJson() => {
-    "error": error,
-    "message": message,
-    "restaurants": List<dynamic>.from(restaurants.map((x) => x.toJson())),
-  };
+        "error": error,
+        "message": message,
+        "restaurants": List<dynamic>.from(restaurants.map((x) => x.toJson())),
+      };
 }
 
 RestaurantListResult parseLocal(var response) {

@@ -7,7 +7,8 @@ class RestaurantDetailProvider extends ChangeNotifier {
   final ApiService apiService;
   final String restaurantId;
 
-  RestaurantDetailProvider({required this.apiService, required this.restaurantId}) {
+  RestaurantDetailProvider(
+      {required this.apiService, required this.restaurantId}) {
     _fetchRestaurantDetail(restaurantId);
   }
 

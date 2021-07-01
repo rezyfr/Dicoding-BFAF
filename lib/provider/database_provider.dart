@@ -12,12 +12,15 @@ class DatabaseProvider extends ChangeNotifier {
   }
 
   late ResultState _state;
+
   ResultState get state => _state;
 
   String _message = '';
+
   String get message => _message;
 
   List<RestaurantList> _favorites = [];
+
   List<RestaurantList> get favorites => _favorites;
 
   void _getFavorites() async {

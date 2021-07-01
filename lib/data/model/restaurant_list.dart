@@ -25,11 +25,11 @@ class RestaurantList {
       );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "description": description,
-    "city": city,
-    "pictureId": pictureId,
-    "rating": rating.toDouble(),
-  };
+        "id": id,
+        "name": name,
+        "description": description,
+        "city": city,
+        "pictureId": pictureId,
+        "rating": rating.toDouble(),
+      };
 }

@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:dicoding_flutter_fundamental/common/navigation.dart';
@@ -51,7 +50,8 @@ class SettingsScreen extends StatelessWidget {
                             builder: (context) {
                               return CupertinoAlertDialog(
                                 title: Text('Coming Soon!'),
-                                content: Text('This feature will be coming soon!'),
+                                content:
+                                    Text('This feature will be coming soon!'),
                                 actions: [
                                   CupertinoDialogAction(
                                     child: Text('Ok'),

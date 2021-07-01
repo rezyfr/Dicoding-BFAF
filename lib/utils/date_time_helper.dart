@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-class DateTimeHelper{
+class DateTimeHelper {
   static DateTime format() {
     // Date and Time Format
     final now = DateTime.now();

@@ -23,7 +23,8 @@ class RestaurantItem extends StatelessWidget {
             final restaurant = restaurantList[index];
             return InkWell(
               onTap: () {
-                Navigation.intentWithData(DetailScreen.routeName, restaurant.id);
+                Navigation.intentWithData(
+                    DetailScreen.routeName, restaurant.id);
               },
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
@@ -35,7 +36,8 @@ class RestaurantItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8.0),
                         child: FadeInImage.memoryNetwork(
                           placeholder: kTransparentImage,
-                          image: "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}",
+                          image:
+                              "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}",
                           height: 100,
                           width: 130,
                           fit: BoxFit.cover,

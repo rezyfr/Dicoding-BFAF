@@ -1,4 +1,3 @@
-
 import 'drink.dart';
 import 'food.dart';
 
@@ -21,14 +20,8 @@ class Menus {
         drinkList.add(new Drinks.fromJson(v));
       });
     }
-    return Menus(
-      foods: foodList,
-      drinks: drinkList
-    );
+    return Menus(foods: foodList, drinks: drinkList);
   }
 
-  Map<String, dynamic> toJson() => {
-    "foods": foods,
-    "drinks": drinks
-  };
+  Map<String, dynamic> toJson() => {"foods": foods, "drinks": drinks};
 }

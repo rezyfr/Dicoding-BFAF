@@ -45,8 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.grey,
           ),
           IconButton(
-            icon:
-            Icon(Platform.isIOS ? CupertinoIcons.square_favorites : Icons.favorite),
+            icon: Icon(Platform.isIOS
+                ? CupertinoIcons.square_favorites
+                : Icons.favorite),
             onPressed: () {
               Navigation.intent(FavoriteScreen.routeName);
             },

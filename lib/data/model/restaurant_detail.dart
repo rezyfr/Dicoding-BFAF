@@ -64,7 +64,7 @@ class RestaurantDetail {
     };
   }
 
-  Map<String, dynamic> toDbJson(){
+  Map<String, dynamic> toDbJson() {
     var restaurantJson = {
       "name": name,
       "description": description,
@@ -76,9 +76,6 @@ class RestaurantDetail {
       "rating": rating,
       "customerReviews": customerReviews
     };
-    return {
-      "id": id,
-      "data": json.encode(restaurantJson)
-    };
+    return {"id": id, "data": json.encode(restaurantJson)};
   }
 }

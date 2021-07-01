@@ -10,14 +10,14 @@ class CustomerReview {
   String date;
 
   factory CustomerReview.fromJson(Map<String, dynamic> json) => CustomerReview(
-    name: json["name"],
-    review: json["review"],
-    date: json["date"],
-  );
+        name: json["name"],
+        review: json["review"],
+        date: json["date"],
+      );
 }
 
 Map<String, dynamic> toJson(String id, String name, String review) => {
-  "name": name,
-  "review": review,
-  "id": id,
-};
+      "name": name,
+      "review": review,
+      "id": id,
+    };

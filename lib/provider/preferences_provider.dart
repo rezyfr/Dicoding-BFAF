@@ -9,6 +9,7 @@ class PreferencesProvider extends ChangeNotifier {
   }
 
   bool _isDailyReminderActive = false;
+
   bool get isDailyReminderActive => _isDailyReminderActive;
 
   void _getDailyReminderPreferences() async {

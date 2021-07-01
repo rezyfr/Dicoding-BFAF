@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:dicoding_flutter_fundamental/data/model/restaurant_list.dart';

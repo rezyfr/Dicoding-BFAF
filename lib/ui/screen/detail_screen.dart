@@ -91,25 +91,27 @@ class DetailScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50),
                             color: Colors.black12,
                           ),
-                          child: isFavorited ? IconButton(
-                            icon: Icon(
-                              Icons.favorite,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              isFavorited = !isFavorited;
-                              provider.removeFavorite(restaurant.id);
-                            },
-                          ) :  IconButton(
-                            icon: Icon(
-                              Icons.favorite_border,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              isFavorited = !isFavorited;
-                              provider.addFavorite(restaurant);
-                            },
-                          ),
+                          child: isFavorited
+                              ? IconButton(
+                                  icon: Icon(
+                                    Icons.favorite,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    isFavorited = !isFavorited;
+                                    provider.removeFavorite(restaurant.id);
+                                  },
+                                )
+                              : IconButton(
+                                  icon: Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    isFavorited = !isFavorited;
+                                    provider.addFavorite(restaurant);
+                                  },
+                                ),
                         ),
                       ),
                     ],

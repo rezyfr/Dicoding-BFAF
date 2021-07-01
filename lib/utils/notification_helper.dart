@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 import 'dart:math';
 
@@ -23,7 +21,7 @@ class NotificationHelper {
   Future<void> initNotifications(
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     var initializationSettingsAndroid =
-    AndroidInitializationSettings('app_icon');
+        AndroidInitializationSettings('app_icon');
 
     var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: false,
@@ -36,11 +34,11 @@ class NotificationHelper {
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String? payload) async {
-          if (payload != null) {
-            print('notification payload: ' + payload);
-          }
-          selectNotificationSubject.add(payload ?? 'empty payload');
-        });
+      if (payload != null) {
+        print('notification payload: ' + payload);
+      }
+      selectNotificationSubject.add(payload ?? 'empty payload');
+    });
   }
 
   Future<void> showNotification(
@@ -64,7 +62,8 @@ class NotificationHelper {
 
     var titleNotification = "<b>Recommended Restaurant</b>";
     Random random = new Random();
-    var restaurant = restaurants.restaurants[random.nextInt(restaurants.restaurants.length)];
+    var restaurant =
+        restaurants.restaurants[random.nextInt(restaurants.restaurants.length)];
     var titleRestaurant = restaurant.name;
 
     await flutterLocalNotificationsPlugin.show(
@@ -74,7 +73,7 @@ class NotificationHelper {
 
   void configureSelectNotificationSubject(String route) {
     selectNotificationSubject.stream.listen(
-          (String payload) async {
+      (String payload) async {
         var data = RestaurantList.fromJson(json.decode(payload));
         Navigation.intentWithData(route, data.id);
       },
